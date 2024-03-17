@@ -5,8 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HCI_PZ1_PR106_2021"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Canvas
+        Width="400"
+        Height="500">
+        <Path Fill="White">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0, 0">
+                        <LineSegment Point="0, 450"/>
+                        <ArcSegment Point="100, 450"
+                                    SweepDirection="Counterclockwise" Size="1,1"
+                                    />
+                        <LineSegment Point="50, 500"/>
+                        <LineSegment Point="350, 500"/>
+                        <ArcSegment Point="350, 400"
+                                    SweepDirection="Counterclockwise" Size="1, 1"
+                                    />
+                        <LineSegment Point="400, 450"/>
+                        <LineSegment Point="400, 0"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
 
-    </Grid>
+        <Path Fill="White">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure StartPoint="0, 450">
+                        <LineSegment Point="50, 500"/>
+                        <LineSegment Point="350, 500"/>
+                        <LineSegment Point="350, 500"/>
+                        <LineSegment Point="400, 450"/>
+                        <LineSegment Point="400, 350"/>
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+        </Path>
+
+    </Canvas>
 </Window>
