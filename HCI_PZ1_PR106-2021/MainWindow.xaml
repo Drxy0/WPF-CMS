@@ -2,30 +2,34 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HCI_PZ1_PR106_2021"
+        xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" SizeToContent="WidthAndHeight"
+        Title="Log in"
+        SizeToContent="WidthAndHeight"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="Transparent">
+        Background="Transparent"
+        MouseLeftButtonDown="LogInWindow_MouseLeftButtonDown">
     <Canvas
         Width="400"
-        Height="500">
+        Height="300">
         <Path Fill="White">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0, 0">
-                        <LineSegment Point="0, 450"/>
-                        <ArcSegment Point="100, 450"
+                        <LineSegment Point="0, 250"/>
+                        <ArcSegment Point="100, 250"
                                     SweepDirection="Counterclockwise" Size="1,1"
                                     />
-                        <LineSegment Point="50, 500"/>
-                        <LineSegment Point="350, 500"/>
-                        <ArcSegment Point="350, 400"
+                        <LineSegment Point="50, 300"/>
+                        <LineSegment Point="350, 300"/>
+                        <ArcSegment Point="350, 200"
                                     SweepDirection="Counterclockwise" Size="1, 1"
                                     />
-                        <LineSegment Point="400, 450"/>
+                        <LineSegment Point="400, 250"/>
                         <LineSegment Point="400, 0"/>
                     </PathFigure>
                 </PathGeometry>
@@ -35,16 +39,86 @@
         <Path Fill="White">
             <Path.Data>
                 <PathGeometry>
-                    <PathFigure StartPoint="0, 450">
-                        <LineSegment Point="50, 500"/>
-                        <LineSegment Point="350, 500"/>
-                        <LineSegment Point="350, 500"/>
-                        <LineSegment Point="400, 450"/>
-                        <LineSegment Point="400, 350"/>
+                    <PathFigure StartPoint="0, 250">
+                        <LineSegment Point="50, 300"/>
+                        <LineSegment Point="350, 300"/>
+                        <LineSegment Point="350, 300"/>
+                        <LineSegment Point="400, 250"/>
+                        <LineSegment Point="400, 150"/>
                     </PathFigure>
                 </PathGeometry>
             </Path.Data>
         </Path>
+        
+
+        <Grid HorizontalAlignment="Center" Height="300" Width="400" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <notifications:NotificationArea x:Name="WindowNotificationArea"
+                                            Grid.ColumnSpan="2"
+                                            Panel.ZIndex="1000"
+                                            MaxItems="3"
+                                            Position="TopRight"
+                                            Width="300"/>
+
+            <Label Grid.ColumnSpan="2"
+                   Content="Log in"
+                   FontSize="30"
+                   FontFamily="Verdana"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            <Label Content="Username"
+                   FontSize="20"
+                   FontFamily="Verdana"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   />
+            <TextBox x:Name="LogIn_Username"
+                     FontSize="20"
+                     Grid.Row="1"
+                     Grid.Column="2"
+                     Margin="20"
+                     />
+            
+            <Label Content="Password"
+                   FontSize="20"
+                   FontFamily="Verdana"
+                   Grid.Row="2"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   />
+            <PasswordBox x:Name="LogIn_PasswordBox"
+                     FontSize="20"
+                     Grid.Row="2"
+                     Grid.Column="2"
+                     Margin="20"
+                     />
+            <Button x:Name="LogIn_Button"
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="50 20 220 40"
+                    Content="Sign in"
+                    Click="LogIn_Button_Click"/>
+            <Button x:Name="Exit_Button"
+                    Grid.Row="3"
+                    Grid.ColumnSpan="2"
+                    Margin="220 20 50 40"
+                    Content="Exit"
+                    ToolTip="Exit the application"
+                    Click="Exit_Button_Click"/>
+
+        </Grid>
+
+
 
     </Canvas>
 </Window>

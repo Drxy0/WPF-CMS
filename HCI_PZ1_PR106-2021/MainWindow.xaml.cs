@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using HCI_PZ1_PR106_2021.Classes;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Notification.Wpf;
+
 
 namespace HCI_PZ1_PR106_2021
 {
@@ -16,9 +19,53 @@ namespace HCI_PZ1_PR106_2021
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private NotificationManager notificationManager;
+		MainWindow mainWindow;
 		public MainWindow()
 		{
 			InitializeComponent();
+			notificationManager = new NotificationManager();
+			mainWindow = (MainWindow)Application.Current.MainWindow;
+		}
+
+
+		private void LogIn_Button_Click(object sender, RoutedEventArgs e)
+		{
+			ApplicationWindow appWindow = new ApplicationWindow();
+			User user = new User();
+			string mode = user.CheckLogin(LogIn_Username.Text.Trim(), LogIn_PasswordBox.Password);
+			if (mode == "Admin")
+			{
+				appWindow.Show();
+				Hide();
+			}
+			else if (mode == "Visitor")
+			{
+				appWindow.Show();
+				Hide();
+			}
+			else
+			{
+				mainWindow.ShowToastNotification(new ToastNotification("Sign in Error", "Invalid username or password!", NotificationType.Error));
+				appWindow.Close();
+			}
+		}
+
+		private void Exit_Button_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
+		private void LogInWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			this.DragMove();
+		}
+
+		public void ShowToastNotification(ToastNotification toastNotification)
+		{
+			notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "WindowNotificationArea");
 		}
 	}
+
+
 }
