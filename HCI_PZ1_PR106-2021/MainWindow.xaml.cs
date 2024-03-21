@@ -65,6 +65,13 @@ namespace HCI_PZ1_PR106_2021
 		{
 			notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "WindowNotificationArea");
 		}
+		private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				LogIn_Button_Click(sender, e);
+			}
+		}
 	}
 
 

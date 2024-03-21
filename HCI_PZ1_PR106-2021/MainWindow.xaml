@@ -12,11 +12,12 @@
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
-        MouseLeftButtonDown="LogInWindow_MouseLeftButtonDown">
+        MouseLeftButtonDown="LogInWindow_MouseLeftButtonDown"
+        PreviewKeyDown="Window_PreviewKeyDown">
     <Canvas
         Width="400"
         Height="300">
-        <Path Fill="White">
+        <Path Fill="#c50103">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0, 0">
@@ -36,7 +37,7 @@
             </Path.Data>
         </Path>
 
-        <Path Fill="White">
+        <Path Fill="#c50103">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0, 250">
@@ -69,56 +70,72 @@
                                             Position="TopRight"
                                             Width="300"/>
 
-            <Label Grid.ColumnSpan="2"
-                   Content="Log in"
+            <Label Content="Log in"
+                   Grid.ColumnSpan="2"
                    FontSize="30"
                    FontFamily="Verdana"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
-            <Label Content="Username"
-                   FontSize="20"
-                   FontFamily="Verdana"
-                   Grid.Row="1"
+                   Foreground="#d5ae38"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   />
+                   Margin="0,0,150,0">
+            </Label>
+            
+            <Image Grid.Column="1"
+                   Grid.RowSpan="2"
+                   Source="C:\Users\drljo\Desktop\HCI_PZ1_PR106-2021\HCI_PZ1_PR106-2021\Flags\Vucji_Do_flag.png"
+                   Margin="0,2,0,65"/>
+
+            <Label Content="Username"
+                   FontSize="24"
+                   FontFamily="Verdana"
+                   Foreground="#d5ae38"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            </Label>
+                   
             <TextBox x:Name="LogIn_Username"
                      FontSize="20"
                      Grid.Row="1"
                      Grid.Column="2"
                      Margin="20"
+                     Background="White"
                      />
-            
+
             <Label Content="Password"
-                   FontSize="20"
+                   FontSize="24"
                    FontFamily="Verdana"
                    Grid.Row="2"
+                   Foreground="#d5ae38"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   />
+                   VerticalAlignment="Center">
+            </Label>
+            
             <PasswordBox x:Name="LogIn_PasswordBox"
                      FontSize="20"
                      Grid.Row="2"
                      Grid.Column="2"
                      Margin="20"
+                     Background="White"
                      />
             <Button x:Name="LogIn_Button"
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Margin="50 20 220 40"
+                    Background="#d5ae38"
+                    FontSize="14"
                     Content="Sign in"
                     Click="LogIn_Button_Click"/>
             <Button x:Name="Exit_Button"
                     Grid.Row="3"
                     Grid.ColumnSpan="2"
                     Margin="220 20 50 40"
+                    Background="#d5ae38"
+                    FontSize="14"
                     Content="Exit"
                     ToolTip="Exit the application"
                     Click="Exit_Button_Click"/>
-
         </Grid>
-
-
 
     </Canvas>
 </Window>

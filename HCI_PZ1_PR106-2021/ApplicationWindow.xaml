@@ -61,9 +61,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Switch Theme"/>
             <Button Content="Add item"
-                    Grid.Row="1"/>
+                    Grid.Row="1"
+                    Click="AddItem_Button_Click"/>
             <Button Content="Delete item"
                     Grid.Row="2"/>
             <Button x:Name="App_Exit_Button"
@@ -71,12 +71,12 @@
                     Grid.Row="3"
                     Click="App_Exit_Button_Click"/>
 
-            <DataGrid x:Name="BitkeDataGrid"
+            <DataGrid x:Name="BattlesDataGrid"
                       Grid.Row="1"
                       Grid.Column="1"
                       Grid.RowSpan="3">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header=""/>
+                    <DataGridCheckBoxColumn Header=""/>
                     <DataGridTextColumn Header="Battle"/>
                     <DataGridTextColumn Header="Image"/>
                     <DataGridTextColumn Header="Date Added"/>

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HCI_PZ1_PR106_2021.Classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,14 +16,13 @@ using System.Windows.Shapes;
 
 namespace HCI_PZ1_PR106_2021
 {
-    /// <summary>
-    /// Interaction logic for ApplicationWindow.xaml
-    /// </summary>
     public partial class ApplicationWindow : Window
     {
+        public ObservableCollection<Battles> Battles { get; set; }
         public ApplicationWindow()
         {
             InitializeComponent();
+            Battles = new ObservableCollection<Battles>();
         }
 
 		private void App_Exit_Button_Click(object sender, RoutedEventArgs e)
@@ -38,5 +39,11 @@ namespace HCI_PZ1_PR106_2021
 		{
             this.DragMove();
         }
-    }
+
+		private void AddItem_Button_Click(object sender, RoutedEventArgs e)
+		{
+			AddBattleWindow addBattle = new AddBattleWindow();
+            addBattle.Show();
+		}
+	}
 }

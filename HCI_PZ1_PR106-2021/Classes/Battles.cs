@@ -8,12 +8,13 @@ namespace HCI_PZ1_PR106_2021.Classes
 {
 	public class Battles
 	{
-		int count = 0;
+		int id;
 		string text;
 		string imagePath;
 		string rtfPath;
 
-		public int Count { get; set; }
+		public Battles() { }
+		public int Id { get; set; }
 		public string Text { get { return text; } set { text = value; } }
 		public string ImagePath { get { return imagePath; } set {  imagePath = value; } }
 		public string RtfPath { get { return rtfPath; } set {  rtfPath = value; } }
