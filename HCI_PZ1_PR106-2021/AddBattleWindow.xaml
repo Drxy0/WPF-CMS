@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HCI_PZ1_PR106_2021"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
         Title="Add a Battle"
         Background="#c50103"
-        Height="600" Width="600">
+        Height="800" Width="600">
     <Window.Resources>
         <Style x:Key="AddBattle_LabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="24"/>
@@ -27,6 +28,8 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -94,9 +97,45 @@
                  Style="{StaticResource TextBoxStyle}"/>
 
         <Label Content="Description" Grid.Row="4"
+               VerticalAlignment="Top"
                Style="{StaticResource AddBattle_LabelStyle}"/>
-        <Label Content="Image" Grid.Row="5"
+        <ToolBar Grid.ColumnSpan="2"
+                 Grid.Column="1"
+                 Grid.Row="4" Margin="-10,0,10,60"/>
+        <RichTextBox Grid.ColumnSpan="3"
+                     Grid.Row="4"
+                     Grid.RowSpan="2" Margin="10,40,10,10"
+                     FontSize="16"/>
+        <Label Content="Image" Grid.Row="6"
                Style="{StaticResource AddBattle_LabelStyle}"/>
+        <Button Grid.Row="6"
+                Click="SelectImage_Button_Click"
+                HorizontalAlignment="Right"
+                Width="40"
+                Height="40"
+                BorderThickness="0"
+                Background="Transparent" Margin="0,0,2,0">
+            <fa5:SvgAwesome Icon="Solid_PlusSquare"
+                            Height="50"
+                            Margin="-20"
+                            />
+        </Button>
+        <Image x:Name="SelectedImage"
+               Grid.Column="2"
+               Grid.Row="5"/>
+        <Button Content="Add"
+                Grid.Row="7"
+                Click="AddButton_Click"
+                Background="#d5ae38"
+                FontSize="14"
+                Margin="20"/>
+        <Button Content="Cancel"
+                Grid.Row="7"
+                Grid.Column="2"
+                Click="CancelButton_Click"
+                Background="#d5ae38"
+                FontSize="14"
+                Margin="20"/>
 
     </Grid>
 </Window>

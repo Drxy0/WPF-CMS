@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +24,37 @@ namespace HCI_PZ1_PR106_2021
         {
             InitializeComponent();
         }
+
+		private void SelectImage_Button_Click(object sender, RoutedEventArgs e)
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "Image Files (*.png;*.jpeg;*.jpg;*.gif;*.bmp)|*.png;*.jpeg;*.jpg;*.gif;*.bmp|All files (*.*)|*.*";
+			if (openFileDialog.ShowDialog() == true)
+			{
+				string imagePath = openFileDialog.FileName;
+				try
+				{
+					BitmapImage bitmap = new BitmapImage();
+					bitmap.BeginInit();
+					bitmap.UriSource = new Uri(imagePath);
+					bitmap.EndInit();
+					SelectedImage.Source = bitmap;
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"Error loading image: {ex.Message}");
+				}
+			}
+		}
+
+		private void CancelButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
+
+		private void AddButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
+		}
 	}
 }
