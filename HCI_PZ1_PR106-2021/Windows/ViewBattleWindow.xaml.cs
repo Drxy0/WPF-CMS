@@ -12,16 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HCI_PZ1_PR106_2021
+namespace HCI_PZ1_PR106_2021.Windows
 {
-    /// <summary>
-    /// Interaction logic for ViewBattle.xaml
-    /// </summary>
-    public partial class ViewBattle : Window
-    {
-        public ViewBattle()
-        {
-            InitializeComponent();
+	/// <summary>
+	/// Interaction logic for ViewBattleWindow.xaml
+	/// </summary>
+	public partial class ViewBattleWindow : Window
+	{
+		public ViewBattleWindow()
+		{
+			InitializeComponent();
+		}
+
+		private void CloseButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.Close();
         }
     }
 }

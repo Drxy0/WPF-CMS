@@ -9,12 +9,12 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
-        Title="ApplicationWindow"
+        Title="Bitke crnogorske vojske novog vijeka"
         MouseLeftButtonDown="ApplicationWindow_MouseLeftButtonDown">
     <Canvas
     Width="1000"
     Height="600">
-        <Path Fill="White">
+        <Path Fill="#c50103">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0, 0">
@@ -34,7 +34,7 @@
             </Path.Data>
         </Path>
 
-        <Path Fill="White">
+        <Path Fill="#c50103">
             <Path.Data>
                 <PathGeometry>
                     <PathFigure StartPoint="0, 500">
