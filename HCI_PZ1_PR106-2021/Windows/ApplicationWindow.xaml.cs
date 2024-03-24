@@ -18,11 +18,11 @@ namespace HCI_PZ1_PR106_2021
 {
     public partial class ApplicationWindow : Window
     {
-        public ObservableCollection<Battles> Battles { get; set; }
+        public ObservableCollection<Battle> Battles { get; set; }
         public ApplicationWindow()
         {
             InitializeComponent();
-            Battles = new ObservableCollection<Battles>();
+            Battles = new ObservableCollection<Battle>();
         }
 
 		private void App_Exit_Button_Click(object sender, RoutedEventArgs e)

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         xmlns:local="clr-namespace:HCI_PZ1_PR106_2021"
         xmlns:fa5="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
@@ -18,7 +19,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="18"/>
         </Style>
         <Style x:Key="AddBattle_ButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#d5ae38"/>
@@ -27,7 +28,9 @@
             <Setter Property="Margin" Value="20"/>
         </Style>
     </Window.Resources>
+    
     <Grid>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -45,16 +48,31 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <notifications:NotificationArea
+            x:Name="AddBattleWindowNotificationArea"
+            Panel.ZIndex="1000"
+            MaxItems="3"
+            Position="TopRight"
+            Grid.ColumnSpan="2"/>
+
         <StackPanel Grid.ColumnSpan="2"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
             <Label Content="Name of the battle"
                    Style="{StaticResource AddBattle_LabelStyle}"/>
             <TextBox x:Name="Name_TextBox" 
-                     Height="40"
+                     Height="36"
                      Width="300"
-                     FontSize="24"/>
+                     FontSize="22"
+                     BorderThickness="3"/>
         </StackPanel>
+        <Label x:Name="NameError_Label"
+               Grid.Row="1"
+               Grid.ColumnSpan="2"
+               Margin="50,-10,0,60"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow"/>
 
         <StackPanel Grid.Column="2"
                     HorizontalAlignment="Center"
@@ -64,6 +82,15 @@
                    Style="{StaticResource AddBattle_LabelStyle}"/>
             <DatePicker x:Name="BattleDate"/>
         </StackPanel>
+        <Label x:Name="DateError_Label"
+               Grid.Column="2"
+               Grid.RowSpan="2"
+               FontSize="14"
+               Foreground="Yellow"
+               Height="36"
+               Margin="50,0,0,0"
+               
+               />
 
         <Label Content="Sides"
                Grid.Row="1"
@@ -72,14 +99,29 @@
         <TextBox x:Name="EnemySideName_TextBox"
                  Grid.Column="2"
                  Grid.Row="1"
-                 Margin="0,30,20,30"
+                 Margin="0,26,20,26"
+                 BorderThickness="2"
                  Style="{StaticResource TextBoxStyle}"/>
+        <Label x:Name="EnemySideNameError_Label"
+               Grid.Row="1"
+               Grid.Column="2"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow"
+               Margin="0,52,0,0"/>
 
         <TextBox x:Name="MNECommanders_TextBox"
                  Grid.Column="0"
                  Grid.Row="2"
-                 Margin="20,30,0,30"
+                 Margin="20,26,0,26"
+                 BorderThickness="2"
                  Style="{StaticResource TextBoxStyle}"/>
+        <Label x:Name="MNECommandersError_Label"
+               Grid.Row="2"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow" Margin="20,52,0,0"/>
+        
         <Label Content="Commanders"
                Grid.Column="1"
                Grid.Row="2"
@@ -88,15 +130,29 @@
         <TextBox x:Name="EnemyCommanders_TextBox"
                  Grid.Column="2"
                  Grid.Row="2"
-                 Margin="0,30,20,30"
+                 Margin="0,26,20,24"
+                 BorderThickness="2"
                  Style="{StaticResource TextBoxStyle}"/>
+        <Label x:Name="EnemyCommandersError_Label"
+               Grid.Row="2"
+               Grid.Column="2"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow" Margin="0,52,0,0"/>
 
 
         <TextBox x:Name="MNEStrenght_TextBox"
                  Grid.Column="0"
                  Grid.Row="3"
-                 Margin="110,30,0,30"
+                 Margin="110,26,0,26"
+                 BorderThickness="2"
                  Style="{StaticResource TextBoxStyle}"/>
+        <Label x:Name="MNEStrenghtError_Label"
+               Grid.Row="3"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow"
+               Margin="20,52,0,0"/>
         <Label Content="Strenght"
                Grid.Column="1"
                Grid.Row="3"
@@ -105,8 +161,15 @@
         <TextBox x:Name="EnemyStrenght_TextBox"
                  Grid.Column="2"
                  Grid.Row="3"
-                 Margin="0,30,110,30"
+                 Margin="0,26,110,26"
+                 BorderThickness="2"
                  Style="{StaticResource TextBoxStyle}"/>
+        <Label x:Name="EnemyStrenghtError_Label"
+               Grid.Row="3"
+               Grid.Column="2"
+               Content=""
+               FontSize="14"
+               Foreground="Yellow" Margin="0,52,0,0"/>
 
         <Label Content="Description" Grid.Row="4"
                VerticalAlignment="Top"
@@ -148,6 +211,7 @@
             <Separator/>
             <ComboBox Name="FontFamilyComboBox"
                       Width="150"
+                      ToolTip="Font"
                       IsTextSearchCaseSensitive="False"
                       IsTextSearchEnabled="True"
                       SelectionChanged="FontFamilyComboBox_SelectionChanged"/>
@@ -158,17 +222,12 @@
                       IsEditable="False"
                       IsTextSearchCaseSensitive="False"
                       IsTextSearchEnabled="True"
-                      SelectionChanged="FontSizeComboBox_SelectionChanged">
-                <ComboBoxItem Content="12"/>
-                <ComboBoxItem Content="14"/>
-                <ComboBoxItem Content="16"/>
-                <ComboBoxItem Content="18"/>
-                <ComboBoxItem Content="20"/>
-            </ComboBox>
+                      SelectionChanged="FontSizeComboBox_SelectionChanged"/>
 
             <ComboBox x:Name="TextColorComboBox"
                       IsTextSearchCaseSensitive="False"
                       IsTextSearchEnabled="True"
+                      ToolTip="Text Color"
                       Width="110"
                       SelectionChanged="TextColorComboBox_SelectionChanged">
                 <ComboBox.ItemTemplate>
@@ -189,8 +248,9 @@
         <RichTextBox x:Name="Description_RichTextBox"
                      Grid.ColumnSpan="3"
                      Grid.Row="4"
-                     Grid.RowSpan="2" Margin="10,40,10,10"
-                     FontSize="16"/>
+                     Grid.RowSpan="2"
+                     Margin="10,40,10,10"
+                     SelectionChanged="Description_RichTextBox_SelectionChanged"/>
         <Label Content="Image"
                ToolTip="Press the button to add an image"
                Grid.Row="6"
@@ -210,23 +270,30 @@
                             />
         </Button>
         <Image x:Name="SelectedImage"
-               Source="{Binding ImagePath}"
                Grid.Column="1"
                Grid.ColumnSpan="2"
                Grid.Row="6"/>
+        <Label x:Name="ImageError_Label"
+               Grid.Column="1"
+               Grid.Row="6"
+               FontSize="14"
+               Foreground="Yellow" Margin="0,25,0,20" AutomationProperties.IsRowHeader="True"
+               />
+
         <Label Content="Result"
                Grid.Row="7"
                Style="{StaticResource AddBattle_LabelStyle}"/>
         <ComboBox x:Name="Result_ComboBox"
-                  IsEnabled="False"
                   Grid.Row="7"
                   Grid.Column="1"
                   Grid.ColumnSpan="2"
                   FontSize="18"
                   Height="30"
-                  Margin="0,0,20,0">
+                  Margin="0,0,20,0"
+                  SelectedValuePath="Content">
             <ComboBoxItem Content="Stalemate"/>
             <ComboBoxItem Content="Montenegrin Victory"/>
+            <ComboBoxItem Content="Montenegrin Defeat"/>
         </ComboBox>
 
         <Button Content="Add"
