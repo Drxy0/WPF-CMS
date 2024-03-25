@@ -14,9 +14,6 @@ using Notification.Wpf;
 
 namespace HCI_PZ1_PR106_2021
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
 		private NotificationManager notificationManager;
@@ -31,23 +28,23 @@ namespace HCI_PZ1_PR106_2021
 
 		private void LogIn_Button_Click(object sender, RoutedEventArgs e)
 		{
-			ApplicationWindow appWindow = new ApplicationWindow();
 			User user = new User();
 			string mode = user.CheckLogin(LogIn_Username.Text.Trim(), LogIn_PasswordBox.Password);
 			if (mode == "Admin")
 			{
+				ApplicationWindow appWindow = new ApplicationWindow(false);
 				appWindow.Show();
 				Hide();
 			}
 			else if (mode == "Visitor")
 			{
+				ApplicationWindow appWindow = new ApplicationWindow(true);
 				appWindow.Show();
 				Hide();
 			}
 			else
 			{
 				mainWindow.ShowToastNotification(new ToastNotification("Sign in Error", "Invalid username or password!", NotificationType.Error));
-				appWindow.Close();
 			}
 		}
 

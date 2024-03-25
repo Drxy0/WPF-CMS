@@ -91,6 +91,8 @@ namespace HCI_PZ1_PR106_2021
 				string result = Result_ComboBox.SelectedValue.ToString();
 
 				Battle battle = new Battle(id++, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
+
+				this.Close();
 			}
 		}
 
@@ -214,6 +216,7 @@ namespace HCI_PZ1_PR106_2021
 			fileStream.Close();
 			return filePath;
 		}
+
 		private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (FontSizeComboBox.SelectedItem != null && !Description_RichTextBox.Selection.IsEmpty)
@@ -279,6 +282,17 @@ namespace HCI_PZ1_PR106_2021
 				}
 			}
 
+		}
+
+		private void Description_RichTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			UpdateWordCount();
+		}
+		private void UpdateWordCount()
+		{
+			string text = new TextRange(Description_RichTextBox.Document.ContentStart, Description_RichTextBox.Document.ContentEnd).Text;
+			int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+			WordCount_TextBox.Text = $"Word Count: {wordCount}";
 		}
 	}
 }

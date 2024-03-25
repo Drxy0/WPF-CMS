@@ -250,7 +250,20 @@
                      Grid.Row="4"
                      Grid.RowSpan="2"
                      Margin="10,40,10,10"
-                     SelectionChanged="Description_RichTextBox_SelectionChanged"/>
+                     SelectionChanged="Description_RichTextBox_SelectionChanged"
+                     TextChanged="Description_RichTextBox_TextChanged"/>
+        <TextBox x:Name="WordCount_TextBox"
+                 IsReadOnly="True"
+                 Text="Word count:"
+                 Grid.Row="5"
+                 Grid.ColumnSpan="3"
+                 Height="16"
+                 FontSize="14"
+                 VerticalAlignment="Bottom"
+                 Margin="10,0,10,-5"
+                 Background="#c50103"
+                 Foreground="#d5ae38"
+                 BorderThickness="0"/> 
         <Label Content="Image"
                ToolTip="Press the button to add an image"
                Grid.Row="6"
@@ -296,7 +309,8 @@
             <ComboBoxItem Content="Montenegrin Defeat"/>
         </ComboBox>
 
-        <Button Content="Add"
+        <Button x:Name="Add_Button"
+                Content="Add"
                 Click="AddButton_Click"
                 Style="{StaticResource AddBattle_ButtonStyle}"/>
         <Button Content="Cancel"

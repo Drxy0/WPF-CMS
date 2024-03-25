@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HCI_PZ1_PR106_2021.Classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace HCI_PZ1_PR106_2021.Windows
 {
-	/// <summary>
-	/// Interaction logic for ViewBattleWindow.xaml
-	/// </summary>
 	public partial class ViewBattleWindow : Window
 	{
 		public ViewBattleWindow()

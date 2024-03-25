@@ -11,6 +11,14 @@
         WindowStyle="None"
         Title="Bitke crnogorske vojske novog vijeka"
         MouseLeftButtonDown="ApplicationWindow_MouseLeftButtonDown">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#d5ae38"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Grid.Row" Value="8"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+    </Window.Resources>
     <Canvas
     Width="1000"
     Height="600">
@@ -50,8 +58,8 @@
         <Grid Height="600"
               Width="1000">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -61,33 +69,85 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Button Content="Add item"
+            <DataGrid x:Name="BattlesDataGrid"
+                      Grid.RowSpan="5"
+                      Margin="20,50,0,50"
+                      CanUserAddRows="False"
+                      CanUserReorderColumns="False"
+                      IsReadOnly="True"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding Battles}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        x:Name="CheckBoxColumn"
+                        Width="0.5*"
+                        Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Name of battle">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Name="NameTextBlock"
+                                    VerticalAlignment="Center"
+                                    Cursor="Hand"
+                                    Text="{Binding NameOfBattle}"
+                                    TextAlignment="Center"
+                                    TextDecorations="Underline"
+                                    MouseLeftButtonUp="NameTextBlock_MouseLeftButtonUp"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="2*" Header="Image">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image
+                                    Width="110"
+                                    Height="120"
+                                    Source="{Binding ImagePath}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Date Added">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="{Binding DateAdded}"
+                                    TextAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+            <Button x:Name="AddButton"
+                    Content="Add item"
                     Grid.Row="1"
-                    Click="AddItem_Button_Click"/>
-            <Button Content="Delete item"
-                    Grid.Row="2"/>
-            <Button x:Name="App_Exit_Button"
+                    Grid.Column="1"
+                    Click="AddItem_Button_Click"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="DeleteButton"
+                    Content="Delete item"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Style="{StaticResource ButtonStyle}"/>
+            <Button x:Name="Exit_Button"
                     Content="Exit"
                     Grid.Row="3"
-                    Click="App_Exit_Button_Click"/>
-
-            <DataGrid x:Name="BattlesDataGrid"
-                      Grid.Row="1"
-                      Grid.Column="1"
-                      Grid.RowSpan="3">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Header=""/>
-                    <DataGridTextColumn Header="Battle"/>
-                    <DataGridTextColumn Header="Image"/>
-                    <DataGridTextColumn Header="Date Added"/>
-                </DataGrid.Columns>
-                
-            </DataGrid>
+                    Grid.Column="1"
+                    Click="Exit_Button_Click"
+                    Style="{StaticResource ButtonStyle}"/>
         </Grid>
-
-
-
-
-
     </Canvas>
 </Window>
