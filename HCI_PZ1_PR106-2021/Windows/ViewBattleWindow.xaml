@@ -64,12 +64,37 @@
                        Style="{StaticResource TextBlockStyle}"/>
         </StackPanel>
 
+        <TextBlock Text="Montenegro"
+                   FlowDirection="RightToLeft"
+                   Grid.Row="1"
+                   Margin="20,28,20,30"
+                   Style="{StaticResource TextBlockStyle}"/>
+        <Border Grid.Column="0"
+                Grid.Row="1"
+                Width="40"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Center"
+                BorderThickness="1"
+                BorderBrush="Black"
+                Margin="10,0,0,0">
+            <Image x:Name="MNEFlag"/>
+        </Border>
         <Label Content="Sides" Grid.Row="1" Grid.Column="1"
            Style="{StaticResource AddBattle_LabelStyle}"/>
+        <Border Grid.Column="1"
+                Grid.Row="1"
+                Width="40"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Center"
+                BorderThickness="1"
+                BorderBrush="Black" Margin="-10,0,0,0">
+            <Image x:Name="EnemyFlag"/>
+        </Border>
+
         <TextBlock x:Name="EnemySideName_TextBlock"
              Grid.Column="2"
              Grid.Row="1"
-             Margin="0,30,20,30"
+             Margin="20,28,20,30"
              Style="{StaticResource TextBlockStyle}"/>
 
         <TextBlock x:Name="MNECommanders_TextBlock"

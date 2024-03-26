@@ -1,8 +1,10 @@
 ﻿using HCI_PZ1_PR106_2021.Classes;
 using HCI_PZ1_PR106_2021.Windows;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,12 +22,14 @@ namespace HCI_PZ1_PR106_2021
 {
     public partial class ApplicationWindow : Window
     {
-        public ObservableCollection<Battle> Battles { get; set; }
-        private static bool viewModeIsVisitor = false;
+        public static ObservableCollection<Battle> Battles { get; set; }
+		private NotificationManager notificationManager;
+		private static bool viewModeIsVisitor = false;
         public ApplicationWindow(bool visitor)
         {
             InitializeComponent();
 			DataContext = this;
+			notificationManager = new NotificationManager();
 			viewModeIsVisitor = visitor;
             Battles = new ObservableCollection<Battle>();
 			DateTime dt = DateTime.Now.Date;
@@ -33,8 +37,8 @@ namespace HCI_PZ1_PR106_2021
 								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\Flags\\Vucji_Do_flag.png",
 								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\rtf Documents\\Dubrovnik.rtf",
 								   "Martinici",
-								   dt, 
-								   "Turci", 
+								   dt,
+								   "Ottoman Empire", 
 								   "kurci", "aaaa", 
 								   "mnestrenght", "enemystrenght",
 								   "Montenegrin Victory"));
@@ -59,10 +63,22 @@ namespace HCI_PZ1_PR106_2021
 		private void AddItem_Button_Click(object sender, RoutedEventArgs e)
 		{
 			AddBattleWindow addBattle = new AddBattleWindow();
-            addBattle.Show();
+			addBattle.Closed += (s, args) =>
+			{
+				bool wasSaved = addBattle.ChangesSaved;
+				AddBattle_Closed(wasSaved);
+			};
+			addBattle.Show();
+		}
+		private void AddBattle_Closed(bool wasSaved)
+		{
+			if (wasSaved)
+			{
+				this.ShowToastNotification(new ToastNotification("Success", "Successfully saved the battle", NotificationType.Success));
+			}
 		}
 
-        private void AdjustPage(bool visitor)
+		private void AdjustPage(bool visitor)
         {
 			if (visitor == true)
 			{
@@ -87,6 +103,7 @@ namespace HCI_PZ1_PR106_2021
 					viewBattleWindow.Name_TextBlock.Text = battle.NameOfBattle;
 					viewBattleWindow.BattleDate.Text = battle.Date.ToString("dd/MM/yyyy");
 					viewBattleWindow.EnemySideName_TextBlock.Text = battle.EnemySide;
+					SetEnemyFlag(ref viewBattleWindow);
 					viewBattleWindow.MNECommanders_TextBlock.Text = battle.MNECommander;
 					viewBattleWindow.EnemyCommanders_TextBlock.Text = battle.EnemyCommander;
 					viewBattleWindow.MNEStrenght_TextBlock.Text = battle.MNEStrenght;
@@ -116,6 +133,28 @@ namespace HCI_PZ1_PR106_2021
 			}
 		}
 
+		private void SetEnemyFlag(ref ViewBattleWindow viewBattleWindow)
+		{
+			string enemyName = viewBattleWindow.EnemySideName_TextBlock.Text;
+			string dir = GetFlagsDir();
+			if (enemyName == "France" ||  enemyName == "Francuska")
+			{
+				viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France.png"));
+			}
+			if (enemyName == "Ottoman Empire" || enemyName == "Osmansko carstvo")
+			{
+				viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire.png"));
+			}
+		}
+
+		private string GetFlagsDir()
+		{
+			DirectoryInfo parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory());
+			DirectoryInfo parentDirectory2 = parentDirectory.Parent.Parent;
+			string dir = parentDirectory2.FullName + "\\Flags";
+			return dir;
+		}
+
 		private void Result_ComboBox_Selection(Battle battle, ref AddBattleWindow addBattle)
 		{
 			if (battle.Result == "Montenegrin Victory")
@@ -139,6 +178,51 @@ namespace HCI_PZ1_PR106_2021
 			{
 				range.Load(stream, DataFormats.Rtf);
 			}
+		}
+
+		private void DeleteButton_Click(object sender, RoutedEventArgs e)
+		{
+			bool anyChecked = false;
+			foreach (Battle battle in Battles)
+			{
+				if (battle.IsChecked)
+				{
+					anyChecked = true;
+					if (File.Exists(battle.RtfPath))
+					{
+						File.Delete(battle.RtfPath);
+					}
+				}
+			}
+			if (anyChecked)
+			{
+				MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to remove the selected item(s)?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+				if (messageBoxResult == MessageBoxResult.Yes)
+				{
+					for (int i = Battles.Count - 1; i >= 0; i--)
+					{
+						if (Battles[i].IsChecked)
+						{
+							Battles.RemoveAt(i);
+						}
+					}
+					BattlesDataGrid.Items.Refresh();
+					this.ShowToastNotification(new ToastNotification("Success", "Successfully removed item(s)", NotificationType.Success));
+				}
+				else
+				{
+					return;
+				}
+			}
+			else
+			{
+				return;
+			}
+		}
+		private void ShowToastNotification(ToastNotification toastNotification)
+		{
+			notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "AppWindowNotificationArea");
 		}
 	}
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HCI_PZ1_PR106_2021"
+        xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         AllowsTransparency="True"
@@ -55,6 +56,12 @@
             </Path.Data>
         </Path>
 
+        <notifications:NotificationArea x:Name="AppWindowNotificationArea"
+                                        Panel.ZIndex="1000"
+                                        MaxItems="3"
+                                        Position="TopRight"
+                                        Margin="320,0,8,8"/>
+        
         <Grid Height="600"
               Width="1000">
             <Grid.ColumnDefinitions>
@@ -141,7 +148,8 @@
                     Content="Delete item"
                     Grid.Row="2"
                     Grid.Column="1"
-                    Style="{StaticResource ButtonStyle}"/>
+                    Style="{StaticResource ButtonStyle}"
+                    Click="DeleteButton_Click"/>
             <Button x:Name="Exit_Button"
                     Content="Exit"
                     Grid.Row="3"

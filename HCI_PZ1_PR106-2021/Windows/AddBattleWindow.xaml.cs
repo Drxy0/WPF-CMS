@@ -24,6 +24,7 @@ namespace HCI_PZ1_PR106_2021
 		private NotificationManager notificationManager;
 		public event PropertyChangedEventHandler PropertyChanged;
 		private static int id = 0;
+		public bool ChangesSaved = false;
 		private SolidColorBrush defaultTextBoxBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xAB, 0xAD, 0xB3));
 
 		private void OnPropertyChanged(string propertyName)
@@ -72,6 +73,7 @@ namespace HCI_PZ1_PR106_2021
 
 		private void CancelButton_Click(object sender, RoutedEventArgs e)
 		{
+			ChangesSaved = false;
 			this.Close();
 		}
 
@@ -91,7 +93,8 @@ namespace HCI_PZ1_PR106_2021
 				string result = Result_ComboBox.SelectedValue.ToString();
 
 				Battle battle = new Battle(id++, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
-
+				ApplicationWindow.Battles.Add(battle);
+				ChangesSaved = true;
 				this.Close();
 			}
 		}
@@ -159,6 +162,12 @@ namespace HCI_PZ1_PR106_2021
 				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
+			else if (!int.TryParse(MNEStrenght_TextBox.Text.Replace(" ", ""), out _))
+			{
+				MNEStrenghtError_Label.Content = "Field must be an integer!";
+				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
 			else
 			{
 				MNEStrenghtError_Label.Content = "";
@@ -169,6 +178,12 @@ namespace HCI_PZ1_PR106_2021
 			{
 				ToastError();
 				EnemyStrenghtError_Label.Content = "Field cannot be left empty!";
+				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
+			else if (!int.TryParse(EnemyStrenght_TextBox.Text.Replace(" ", ""), out _))
+			{
+				EnemyStrenghtError_Label.Content = "Field must be an integer!";
 				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
@@ -216,7 +231,7 @@ namespace HCI_PZ1_PR106_2021
 			fileStream.Close();
 			return filePath;
 		}
-
+		#region RichTextBox stuff
 		private void FontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (FontSizeComboBox.SelectedItem != null && !Description_RichTextBox.Selection.IsEmpty)
@@ -241,25 +256,14 @@ namespace HCI_PZ1_PR106_2021
 				Description_RichTextBox.Selection.ApplyPropertyValue(Inline.ForegroundProperty, brush);
 			}
 		}
-
-		public void ToastError()
-		{
-			ShowToastNotification(new ToastNotification("Error", "Invalid fields!", NotificationType.Error));
-
-		}
-		public void ShowToastNotification(ToastNotification toastNotification)
-		{
-			notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "AddBattleWindowNotificationArea");
-		}
-
 		private void Description_RichTextBox_SelectionChanged(object sender, RoutedEventArgs e)
 		{
 			object fontWeight = Description_RichTextBox.Selection.GetPropertyValue(Inline.FontWeightProperty);
 			BoldToggleButton.IsChecked = (fontWeight != DependencyProperty.UnsetValue) && (fontWeight.Equals(FontWeights.Bold));
-			
+
 			object fontStyle = Description_RichTextBox.Selection.GetPropertyValue(Inline.FontStyleProperty);
 			ItalicToggleButton.IsChecked = (fontStyle != DependencyProperty.UnsetValue) && (fontStyle.Equals(FontStyles.Italic));
-			
+
 			object textDecoration = Description_RichTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty);
 			UnderlineToggleButton.IsChecked = (textDecoration != DependencyProperty.UnsetValue) && ((textDecoration as TextDecorationCollection).Contains(TextDecorations.Underline[0]));
 
@@ -293,6 +297,36 @@ namespace HCI_PZ1_PR106_2021
 			string text = new TextRange(Description_RichTextBox.Document.ContentStart, Description_RichTextBox.Document.ContentEnd).Text;
 			int wordCount = text.Split(new char[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
 			WordCount_TextBox.Text = $"Word Count: {wordCount}";
+		}
+		#endregion
+		public void ToastError()
+		{
+			ShowToastNotification(new ToastNotification("Error", "Invalid fields!", NotificationType.Error));
+		}
+		public void ShowToastNotification(ToastNotification toastNotification)
+		{
+			notificationManager.Show(toastNotification.Title, toastNotification.Message, toastNotification.Type, "AddBattleWindowNotificationArea");
+		}
+
+		private void BattleDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (BattleDate.SelectedDate.HasValue)
+			{
+				DateTime selectedDate = BattleDate.SelectedDate.Value;
+
+				if (selectedDate.Year < 1492 || selectedDate.Year > 1914)
+				{
+					ShowToastNotification(new ToastNotification("Error", "Date must be between years 1492 and 1914", NotificationType.Error));
+					BattleDate.SelectedDate = null;
+					DateError_Label.Content = "Invalid date!";
+					BattleDate.BorderBrush = Brushes.Yellow;
+				}
+                else
+                {
+					DateError_Label.Content = "";
+					BattleDate.BorderBrush = defaultTextBoxBrush;
+				}
+            }
 		}
 	}
 }

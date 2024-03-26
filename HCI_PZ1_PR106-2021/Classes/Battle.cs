@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.IO;
 
 namespace HCI_PZ1_PR106_2021.Classes
 {
-	public class Battle
+	[Serializable]
+	public class Battle : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected virtual void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+
 		private int id;
 		private string imagePath;
 		private string rtfPath;
@@ -20,6 +29,7 @@ namespace HCI_PZ1_PR106_2021.Classes
 		private string mneStrenght;
 		private string enemyStrenght;
 		private string result;
+		private bool isChecked;
 
 		public Battle() { }
 		public Battle(int id, 
@@ -67,6 +77,19 @@ namespace HCI_PZ1_PR106_2021.Classes
 			$"Date: {Date}, EnemySide: {EnemySide}, MneCommander: {MNECommander}, " +
 			$"EnemyCommander: {EnemyCommander}, MneStrength: {MNEStrenght}, EnemyStrength: {EnemyStrenght}, " +
 			$"Result: {Result}";
+		}
+
+		public bool IsChecked
+		{
+			get { return isChecked; }
+			set
+			{
+				if (isChecked != value)
+				{
+					isChecked = value;
+					OnPropertyChanged(nameof(IsChecked));
+				}
+			}
 		}
 	}
 }
