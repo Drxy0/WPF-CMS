@@ -14,8 +14,4 @@
     <PackageReference Include="Notification.Wpf" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="rtf Documents\" />
-  </ItemGroup>
-
 </Project>

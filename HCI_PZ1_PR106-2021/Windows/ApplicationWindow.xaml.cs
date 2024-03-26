@@ -32,10 +32,10 @@ namespace HCI_PZ1_PR106_2021
 			notificationManager = new NotificationManager();
 			viewModeIsVisitor = visitor;
             Battles = new ObservableCollection<Battle>();
-			DateTime dt = DateTime.Now.Date;
+			DateTime dt = new DateTime(1913, 1, 1);
             Battles.Add(new Battle(0,
 								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\Flags\\Vucji_Do_flag.png",
-								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\rtf Documents\\Dubrovnik.rtf",
+								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\rtf Documents\\Martinici.rtf",
 								   "Martinici",
 								   dt,
 								   "Ottoman Empire", 
@@ -103,7 +103,8 @@ namespace HCI_PZ1_PR106_2021
 					viewBattleWindow.Name_TextBlock.Text = battle.NameOfBattle;
 					viewBattleWindow.BattleDate.Text = battle.Date.ToString("dd/MM/yyyy");
 					viewBattleWindow.EnemySideName_TextBlock.Text = battle.EnemySide;
-					SetEnemyFlag(ref viewBattleWindow);
+					SetMNEFlag(ref viewBattleWindow, battle);
+					SetEnemyFlag(ref viewBattleWindow, battle);
 					viewBattleWindow.MNECommanders_TextBlock.Text = battle.MNECommander;
 					viewBattleWindow.EnemyCommanders_TextBlock.Text = battle.EnemyCommander;
 					viewBattleWindow.MNEStrenght_TextBlock.Text = battle.MNEStrenght;
@@ -133,17 +134,45 @@ namespace HCI_PZ1_PR106_2021
 			}
 		}
 
-		private void SetEnemyFlag(ref ViewBattleWindow viewBattleWindow)
+		private void SetMNEFlag(ref ViewBattleWindow viewBattleWindow, Battle battle)
+		{
+			int year = int.Parse(battle.Date.Year.ToString());
+			string dir = GetFlagsDir();
+
+			if (year <= 1496)
+				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro_Crnojevic.png"));
+			else if (year > 1496 && year < 1852)
+				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro_Krstas_white.png"));
+			else if (year >= 1852 && year <= 1860)
+				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro(1852-1860).png"));
+			else if (year > 1860 && year <= 1905)
+				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro(1860–1905).png"));
+			else if (year > 1905)
+				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro(1905-1918).png"));
+		}
+		private void SetEnemyFlag(ref ViewBattleWindow viewBattleWindow, Battle battle)
 		{
 			string enemyName = viewBattleWindow.EnemySideName_TextBlock.Text;
 			string dir = GetFlagsDir();
+			int year = int.Parse(battle.Date.Year.ToString());
+			viewBattleWindow.EnemyFlag_Border.Visibility = Visibility.Visible;
 			if (enemyName == "France" ||  enemyName == "Francuska")
 			{
-				viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France.png"));
+				if (year >= 1804 && year <= 1815)
+					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France_Napoleon.png"));
+				else
+					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France.png"));
 			}
-			if (enemyName == "Ottoman Empire" || enemyName == "Osmansko carstvo")
+			else if (enemyName == "Ottoman Empire" || enemyName == "Osmansko carstvo")
 			{
-				viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire.png"));
+				if (year >= 1793)
+					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire.png"));
+				else
+					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire(1517-1793).png"));
+			}
+			else
+			{
+				viewBattleWindow.EnemyFlag_Border.Visibility = Visibility.Hidden;
 			}
 		}
 
