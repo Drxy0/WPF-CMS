@@ -150,12 +150,14 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Click="AddItem_Button_Click"
+                    ToolTip="Add a battle"
                     Style="{StaticResource ButtonStyle}"/>
             <Button x:Name="DeleteButton"
                     Content="Delete item"
                     Grid.Row="2"
                     Grid.Column="1"
                     Style="{StaticResource ButtonStyle}"
+                    ToolTip="Delete the selected items"
                     Click="DeleteButton_Click"/>
             <Button x:Name="Exit_Button"
                     Content="Exit"

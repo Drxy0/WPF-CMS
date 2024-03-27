@@ -124,6 +124,7 @@
                  Grid.Row="2"
                  Margin="10,26,0,26"
                  BorderThickness="2"
+                 ToolTip="Lead commander of the Montenegrin army"
                  Style="{StaticResource TextBoxStyle}"/>
         <Label x:Name="MNECommandersError_Label"
                Grid.Row="2"
@@ -141,6 +142,7 @@
                  Grid.Row="2"
                  Margin="0,26,10,26"
                  BorderThickness="2"
+                 ToolTip="Lead commander of the Enemy army"
                  Style="{StaticResource TextBoxStyle}"/>
         <Label x:Name="EnemyCommandersError_Label"
                Grid.Row="2"
@@ -155,6 +157,7 @@
                  Grid.Row="3"
                  Margin="110,26,0,26"
                  BorderThickness="2"
+                 ToolTip="Strenght of the Montenegrin Army"
                  Style="{StaticResource TextBoxStyle}"/>
         <Label x:Name="MNEStrenghtError_Label"
                Grid.Row="3"
@@ -172,6 +175,7 @@
                  Grid.Row="3"
                  Margin="0,26,110,26"
                  BorderThickness="2"
+                 ToolTip="Strenght of the Enemy Army"
                  Style="{StaticResource TextBoxStyle}"/>
         <Label x:Name="EnemyStrenghtError_Label"
                Grid.Row="3"

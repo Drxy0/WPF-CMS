@@ -113,6 +113,7 @@
         <Label Content="Commanders"
                Grid.Column="1"
                Grid.Row="2" 
+               ToolTip="Lead commanders of the battle"
                Style="{StaticResource AddBattle_LabelStyle}"/>
         <TextBlock x:Name="EnemyCommanders_TextBlock"
                    TextWrapping="Wrap"
@@ -133,6 +134,7 @@
         <Label Content="Strenght"
                Grid.Column="1"
                Grid.Row="3" 
+               ToolTip="Number of soldiers"
                Style="{StaticResource AddBattle_LabelStyle}"/>
         <TextBlock x:Name="EnemyStrenght_TextBlock"
                    Grid.Column="2"
