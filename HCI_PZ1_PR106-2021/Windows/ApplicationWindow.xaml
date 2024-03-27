@@ -104,24 +104,32 @@
                     <DataGridTemplateColumn Width="*" Header="Name of battle">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    Name="NameTextBlock"
-                                    VerticalAlignment="Center"
-                                    Cursor="Hand"
-                                    Text="{Binding NameOfBattle}"
-                                    TextAlignment="Center"
-                                    TextDecorations="Underline"
-                                    MouseLeftButtonUp="NameTextBlock_MouseLeftButtonUp"/>
+                                <TextBlock Name="NameTextBlock"
+                                           FontSize="16"
+                                           VerticalAlignment="Center"
+                                           Cursor="Hand"
+                                           Text="{Binding NameOfBattle}"
+                                           TextAlignment="Center"
+                                           TextDecorations="Underline"
+                                           MouseLeftButtonUp="NameTextBlock_MouseLeftButtonUp"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="*" Header="Date">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="18"
+                                           Text="{Binding Date, StringFormat = {}{0:dd/MM/yyyy}}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="2*" Header="Image">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image
-                                    Width="110"
-                                    Height="120"
-                                    Source="{Binding ImagePath}" />
+                                <Image MaxHeight="150"
+                                       Source="{Binding ImagePath}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,7 @@ namespace HCI_PZ1_PR106_2021
 	{
 		private NotificationManager notificationManager;
 		public event PropertyChangedEventHandler PropertyChanged;
-		private static int id = 0;
+		private static uint id = 0;
 		public bool ChangesSaved = false;
 		private SolidColorBrush defaultTextBoxBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xAB, 0xAD, 0xB3));
 
@@ -92,7 +93,14 @@ namespace HCI_PZ1_PR106_2021
 				string rtfPath = SaveToRTF();
 				string result = Result_ComboBox.SelectedValue.ToString();
 
-				Battle battle = new Battle(id++, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
+				while (true)
+				{
+					bool idExists = ApplicationWindow.Battles.Any(b => b.Id == id);
+					if (idExists) { id++; }
+					else break;
+				}
+
+				Battle battle = new Battle(id, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
 				ApplicationWindow.Battles.Add(battle);
 				ChangesSaved = true;
 				this.Close();
@@ -102,11 +110,18 @@ namespace HCI_PZ1_PR106_2021
 		private bool FormErrorOccured()
 		{
 			bool errorOccured = false;
-
+			string regexPattern = @"\d";
 			if (Name_TextBox.Text.Equals(String.Empty))
 			{
 				ToastError();
 				NameError_Label.Content = "Field cannot be left empty!";
+				Name_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
+			else if (Regex.IsMatch(Name_TextBox.Text, regexPattern))
+			{
+				ToastError();
+				NameError_Label.Content = "Field cannot contain numbers!";
 				Name_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
@@ -123,6 +138,13 @@ namespace HCI_PZ1_PR106_2021
 				EnemySideName_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
+			else if (Regex.IsMatch(EnemySideName_TextBox.Text, regexPattern))
+			{
+				ToastError();
+				EnemySideNameError_Label.Content = "Field cannot contain numbers!";
+				EnemySideName_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
 			else
 			{
 				EnemySideNameError_Label.Content = "";
@@ -136,6 +158,13 @@ namespace HCI_PZ1_PR106_2021
 				MNECommanders_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
+			else if (Regex.IsMatch(MNECommanders_TextBox.Text, regexPattern))
+			{
+				ToastError();
+				MNECommandersError_Label.Content = "Field cannot contain numbers!";
+				MNECommanders_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
 			else
 			{
 				MNECommandersError_Label.Content = "";
@@ -146,6 +175,13 @@ namespace HCI_PZ1_PR106_2021
 			{
 				ToastError();
 				EnemyCommandersError_Label.Content = "Field cannot be left empty!";
+				EnemyCommanders_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
+			else if (Regex.IsMatch(EnemyCommanders_TextBox.Text, regexPattern))
+			{
+				ToastError();
+				EnemyCommandersError_Label.Content = "Field cannot contain numbers!";
 				EnemyCommanders_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
@@ -208,6 +244,7 @@ namespace HCI_PZ1_PR106_2021
 
 			try
 			{
+				ImageError_Label.Content = "";
 				string imagePath = SelectedImage.Source.ToString();
 			}
 			catch (Exception ex)

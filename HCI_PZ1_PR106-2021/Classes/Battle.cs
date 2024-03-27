@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.IO;
+using System.Xml.Serialization;
+using System.Xml.Linq;
+using System.Windows;
 
 namespace HCI_PZ1_PR106_2021.Classes
 {
@@ -17,7 +20,7 @@ namespace HCI_PZ1_PR106_2021.Classes
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		private int id;
+		private uint id;
 		private string imagePath;
 		private string rtfPath;
 		private string nameOfBattle;
@@ -26,13 +29,13 @@ namespace HCI_PZ1_PR106_2021.Classes
 		private string enemySide;
 		private string mneCommander;
 		private string enemyCommander;
-		private string mneStrenght;
-		private string enemyStrenght;
+		private string mneStrength;
+		private string enemyStrength;
 		private string result;
 		private bool isChecked;
 
 		public Battle() { }
-		public Battle(int id, 
+		public Battle(uint id, 
 					   string imagePath, 
 					   string rtfPath, 
 					   string nameOfBattle, 
@@ -40,8 +43,8 @@ namespace HCI_PZ1_PR106_2021.Classes
 					   string enemySide, 
 					   string mneCommander, 
 					   string enemyCommander, 
-					   string mneStrenght, 
-					   string enemyStrenght, 
+					   string mneStrength, 
+					   string enemyStrength, 
 					   string result)
 		{
 			this.id = id;
@@ -52,13 +55,13 @@ namespace HCI_PZ1_PR106_2021.Classes
 			this.enemySide = enemySide;
 			this.mneCommander = mneCommander;
 			this.enemyCommander = enemyCommander;
-			this.mneStrenght = mneStrenght;
-			this.enemyStrenght = enemyStrenght;
+			this.mneStrength = mneStrength;
+			this.enemyStrength = enemyStrength;
 			this.result = result;
 			this.DateAdded = DateTime.Now;
 		}
 
-		public int Id { get => id; set => id = value; }
+		public uint Id { get => id; set => id = value; }
 		public string ImagePath { get { return imagePath; } set {  imagePath = value; } }
 		public string RtfPath { get { return rtfPath; } set {  rtfPath = value; } }
 		public string NameOfBattle { get => nameOfBattle; set => nameOfBattle = value; }
@@ -67,15 +70,15 @@ namespace HCI_PZ1_PR106_2021.Classes
 		public string EnemySide { get => enemySide; set => enemySide = value; }
 		public string MNECommander { get => mneCommander; set => mneCommander = value; }
 		public string EnemyCommander { get => enemyCommander; set => enemyCommander = value; }
-		public string MNEStrenght { get => mneStrenght; set => mneStrenght = value; }
-		public string EnemyStrenght { get => enemyStrenght; set => enemyStrenght = value; }
+		public string MNEStrength { get => mneStrength; set => mneStrength = value; }
+		public string EnemyStrength { get => enemyStrength; set => enemyStrength = value; }
 		public string Result { get => result; set => result = value; }
 
 		public override string ToString()
 		{
 			return $"Id: {Id}, ImagePath: {ImagePath}, RtfPath: {RtfPath}, NameOfBattle: {NameOfBattle}, " +
 			$"Date: {Date}, EnemySide: {EnemySide}, MneCommander: {MNECommander}, " +
-			$"EnemyCommander: {EnemyCommander}, MneStrength: {MNEStrenght}, EnemyStrength: {EnemyStrenght}, " +
+			$"EnemyCommander: {EnemyCommander}, MneStrength: {MNEStrength}, EnemyStrength: {EnemyStrength}, " +
 			$"Result: {Result}";
 		}
 
@@ -91,5 +94,15 @@ namespace HCI_PZ1_PR106_2021.Classes
 				}
 			}
 		}
+
+		public string Serialize()
+		{
+			XmlSerializer serializer = new XmlSerializer(typeof(Battle));
+			StringWriter writer = new StringWriter();
+			serializer.Serialize(writer, this);
+			return writer.ToString();
+		}
+
+
 	}
 }

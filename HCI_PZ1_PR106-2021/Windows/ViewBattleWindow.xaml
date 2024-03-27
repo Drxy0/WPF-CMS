@@ -36,30 +36,32 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1.2*"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.ColumnSpan="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
             <Label Content="Name of the battle"
-               Style="{StaticResource AddBattle_LabelStyle}"/>
+                   Style="{StaticResource AddBattle_LabelStyle}"/>
             <TextBlock x:Name="Name_TextBlock" 
-                 Height="40"
-                 Width="300"
-                 FontSize="24"
-                 HorizontalAlignment="Center"
-                 Style="{StaticResource TextBlockStyle}"/>
+                       Height="40"
+                       Width="300"
+                       FontSize="24"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       Style="{StaticResource TextBlockStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="2"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
             <Label Content="Date"
-               FontSize="20"
-               Style="{StaticResource AddBattle_LabelStyle}"/>
+                   FontSize="20"
+                   Style="{StaticResource AddBattle_LabelStyle}"/>
             <TextBlock x:Name="BattleDate"
                        Style="{StaticResource TextBlockStyle}"/>
         </StackPanel>
@@ -67,7 +69,7 @@
         <TextBlock Text="Montenegro"
                    FlowDirection="RightToLeft"
                    Grid.Row="1"
-                   Margin="20,28,25,30"
+                   Margin="20,28,25,28"
                    Style="{StaticResource TextBlockStyle}"/>
         <Border Grid.Column="0"
                 Grid.Row="1"
@@ -80,7 +82,7 @@
             <Image x:Name="MNEFlag"/>
         </Border>
         <Label Content="Sides" Grid.Row="1" Grid.Column="1"
-           Style="{StaticResource AddBattle_LabelStyle}"/>
+               Style="{StaticResource AddBattle_LabelStyle}"/>
         <Border x:Name="EnemyFlag_Border"
                 Grid.Column="1"
                 Grid.Row="1"
@@ -94,32 +96,38 @@
         </Border>
 
         <TextBlock x:Name="EnemySideName_TextBlock"
-             Grid.Column="2"
-             Grid.Row="1"
-             Margin="25,28,20,30"
-             Style="{StaticResource TextBlockStyle}"/>
+                   Grid.Column="2"
+                   Grid.Row="1"
+                   Margin="25,28,20,28"
+                   Style="{StaticResource TextBlockStyle}"/>
 
         <TextBlock x:Name="MNECommanders_TextBlock"
-             Grid.Column="0"
-             Grid.Row="2"
-             Margin="20,30,0,30"
-             FlowDirection="RightToLeft"
-             Style="{StaticResource TextBlockStyle}"/>
+                   TextWrapping="Wrap"
+                   Grid.Column="0"
+                   Grid.Row="2"
+                   Margin="10,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FlowDirection="RightToLeft"
+                   Style="{StaticResource TextBlockStyle}"/>
         <Label Content="Commanders"
-           Grid.Column="1"
-           Grid.Row="2" 
-           Style="{StaticResource AddBattle_LabelStyle}"/>
+               Grid.Column="1"
+               Grid.Row="2" 
+               Style="{StaticResource AddBattle_LabelStyle}"/>
         <TextBlock x:Name="EnemyCommanders_TextBlock"
-             Grid.Column="2"
-             Grid.Row="2"
-             Margin="0,30,20,30"
-             Style="{StaticResource TextBlockStyle}"/>
+                   TextWrapping="Wrap"
+                   Grid.Column="2"
+                   Grid.Row="2"
+                   Margin="0,0,10,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Style="{StaticResource TextBlockStyle}"/>
 
 
         <TextBlock x:Name="MNEStrenght_TextBlock"
                    Grid.Column="0"
                    Grid.Row="3"
-                   Margin="110,30,0,30"
+                   Margin="110,28,0,32"
                    FlowDirection="RightToLeft"
                    Style="{StaticResource TextBlockStyle}"/>
         <Label Content="Strenght"
@@ -129,7 +137,7 @@
         <TextBlock x:Name="EnemyStrenght_TextBlock"
                    Grid.Column="2"
                    Grid.Row="3"
-                   Margin="0,30,110,30"
+                   Margin="0,28,110,32"
                    Style="{StaticResource TextBlockStyle}"/>
 
         <Label Content="Description" Grid.Row="4"
@@ -139,7 +147,9 @@
                      Grid.ColumnSpan="3"
                      Grid.Row="4"
                      Grid.RowSpan="2"
-                     Margin="10,40,10,10"
+                     Margin="30,40,30,10"
+                     Background="Transparent"
+                     BorderThickness="0"
                      IsReadOnly="True"/>
 
         <Label Content="Image" Grid.Row="6"

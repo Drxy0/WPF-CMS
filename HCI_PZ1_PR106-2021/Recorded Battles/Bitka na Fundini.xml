@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>2</Id>
+  <ImagePath>file:///C:/Users/drljo/Desktop/HCI_PZ1_PR106-2021/HCI_PZ1_PR106-2021/Images/Bitka_na_Fundini.jpg</ImagePath>
+  <RtfPath>../../../rtf Documents/Bitka na Fundini.rtf</RtfPath>
+  <NameOfBattle>Bitka na Fundini</NameOfBattle>
+  <Date>1876-08-02T00:00:00</Date>
+  <DateAdded>2024-03-27T15:12:29.072144+01:00</DateAdded>
+  <EnemySide>Ottoman Empire</EnemySide>
+  <MNECommander>Ilija Plamenac</MNECommander>
+  <EnemyCommander>Mahmud-paša</EnemyCommander>
+  <MNEStrength>5000</MNEStrength>
+  <EnemyStrength>40000</EnemyStrength>
+  <Result>Montenegrin Victory</Result>
+  <IsChecked>false</IsChecked>
+</Battle>

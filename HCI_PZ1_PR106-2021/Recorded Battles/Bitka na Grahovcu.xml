@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>5</Id>
+  <ImagePath>file:///C:/Users/drljo/Desktop/HCI_PZ1_PR106-2021/HCI_PZ1_PR106-2021/Images/Grahovobattle.jpg</ImagePath>
+  <RtfPath>../../../rtf Documents/Bitka na Grahovcu.rtf</RtfPath>
+  <NameOfBattle>Bitka na Grahovcu</NameOfBattle>
+  <Date>1858-01-28T00:00:00</Date>
+  <DateAdded>2024-03-27T15:36:19.6391483+01:00</DateAdded>
+  <EnemySide>Ottoman Empire</EnemySide>
+  <MNECommander>Mirko Petrović-Njegoš</MNECommander>
+  <EnemyCommander>Husein Paša</EnemyCommander>
+  <MNEStrength>7500</MNEStrength>
+  <EnemyStrength>10000</EnemyStrength>
+  <Result>Montenegrin Victory</Result>
+  <IsChecked>false</IsChecked>
+</Battle>

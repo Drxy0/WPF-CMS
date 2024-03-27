@@ -17,6 +17,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace HCI_PZ1_PR106_2021
 {
@@ -25,26 +27,70 @@ namespace HCI_PZ1_PR106_2021
         public static ObservableCollection<Battle> Battles { get; set; }
 		private NotificationManager notificationManager;
 		private static bool viewModeIsVisitor = false;
-        public ApplicationWindow(bool visitor)
+        public ApplicationWindow(bool isVisitor)
         {
             InitializeComponent();
 			DataContext = this;
 			notificationManager = new NotificationManager();
-			viewModeIsVisitor = visitor;
+			viewModeIsVisitor = isVisitor;
             Battles = new ObservableCollection<Battle>();
-			DateTime dt = new DateTime(1913, 1, 1);
-            Battles.Add(new Battle(0,
-								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\Flags\\Vucji_Do_flag.png",
-								   "C:\\Users\\drljo\\Desktop\\HCI_PZ1_PR106-2021\\HCI_PZ1_PR106-2021\\rtf Documents\\Martinici.rtf",
-								   "Martinici",
-								   dt,
-								   "Ottoman Empire", 
-								   "kurci", "aaaa", 
-								   "mnestrenght", "enemystrenght",
-								   "Montenegrin Victory"));
-            AdjustPage(visitor);
+			LoadBattlesFromRecords();
+			Closing += ApplicationWindow_Closing;
+            AdjustPageForVisitor(isVisitor);
         }
 
+		private void LoadBattlesFromRecords()
+		{
+			string recordsDir = GetDir("Recorded Battles");
+			if (Directory.Exists(recordsDir))
+			{
+				string[] files = Directory.GetFiles(recordsDir);
+				foreach (string file in files)
+				{
+					if (System.IO.Path.GetExtension(file).Equals(".xml", StringComparison.OrdinalIgnoreCase))
+					{
+						Battle battle = LoadFromXml(file);
+						Battles.Add(battle);
+					}
+				}
+			}
+		}
+
+		private Battle LoadFromXml(string filePath)
+		{
+			try
+			{
+				using (var stream = new StreamReader(filePath, System.Text.Encoding.UTF8))
+				using (var reader = XmlReader.Create(stream))
+				{
+					XDocument doc = XDocument.Load(reader);
+					XElement battleElement = doc.Element("Battle");
+
+					Battle battle = new Battle();
+
+					battle.Id = uint.Parse(battleElement.Element("Id").Value);
+					battle.ImagePath = battleElement.Element("ImagePath").Value;
+					battle.RtfPath = battleElement.Element("RtfPath").Value;
+					battle.NameOfBattle = battleElement.Element("NameOfBattle").Value;
+					battle.Date = DateTime.Parse(battleElement.Element("Date").Value);
+					battle.DateAdded = DateTime.Parse(battleElement.Element("DateAdded").Value);
+					battle.EnemySide = battleElement.Element("EnemySide").Value;
+					battle.MNECommander = battleElement.Element("MNECommander").Value;
+					battle.EnemyCommander = battleElement.Element("EnemyCommander").Value;
+					battle.MNEStrength = battleElement.Element("MNEStrength").Value;
+					battle.EnemyStrength = battleElement.Element("EnemyStrength").Value;
+					battle.Result = battleElement.Element("Result").Value;
+
+					return battle;
+
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Error loading Battle from XML: {ex.Message}");
+				return new Battle();
+			}
+		}
 		private void Exit_Button_Click(object sender, RoutedEventArgs e)
 		{
             Close();
@@ -54,6 +100,35 @@ namespace HCI_PZ1_PR106_2021
                 mainWindow.Show();
             }
         }
+
+		private void ApplicationWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			RecordBattlesList();
+		}
+
+		private void RecordBattlesList()
+		{
+			string recordsDir = GetDir("Recorded Battles");
+			if (Directory.Exists(recordsDir))
+			{
+				// Delete all files in the directory
+				string[] files = Directory.GetFiles(recordsDir);
+				foreach (string file in files)
+				{
+					File.Delete(file);
+				}
+			}
+
+			foreach(Battle battle in Battles)
+			{
+				if (battle.NameOfBattle != null)
+				{
+					string xml = battle.Serialize();
+					string xmlFilePath = recordsDir + "\\" + battle.NameOfBattle + ".xml";
+					File.WriteAllText(xmlFilePath, xml);
+				}
+			}
+		}
 
 		private void ApplicationWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
@@ -78,9 +153,9 @@ namespace HCI_PZ1_PR106_2021
 			}
 		}
 
-		private void AdjustPage(bool visitor)
+		private void AdjustPageForVisitor(bool isVisitor)
         {
-			if (visitor == true)
+			if (isVisitor == true)
 			{
 				AddButton.IsEnabled = false;
 				AddButton.Visibility = Visibility.Hidden;
@@ -107,8 +182,8 @@ namespace HCI_PZ1_PR106_2021
 					SetEnemyFlag(ref viewBattleWindow, battle);
 					viewBattleWindow.MNECommanders_TextBlock.Text = battle.MNECommander;
 					viewBattleWindow.EnemyCommanders_TextBlock.Text = battle.EnemyCommander;
-					viewBattleWindow.MNEStrenght_TextBlock.Text = battle.MNEStrenght;
-					viewBattleWindow.EnemyStrenght_TextBlock.Text = battle.EnemyStrenght;
+					viewBattleWindow.MNEStrenght_TextBlock.Text = battle.MNEStrength;
+					viewBattleWindow.EnemyStrenght_TextBlock.Text = battle.EnemyStrength;
 					LoadDescription_RTF(battle.RtfPath, viewBattleWindow.Description_RichTextBox);
 					viewBattleWindow.SelectedImage.Source = new BitmapImage(new Uri(battle.ImagePath));
 					viewBattleWindow.Result_TextBlock.Text = battle.Result;
@@ -122,8 +197,8 @@ namespace HCI_PZ1_PR106_2021
 					addBattle.EnemySideName_TextBox.Text = battle.EnemySide;
 					addBattle.MNECommanders_TextBox.Text = battle.MNECommander;
 					addBattle.EnemyCommanders_TextBox.Text = battle.EnemyCommander;
-					addBattle.MNEStrenght_TextBox.Text = battle.MNEStrenght;
-					addBattle.EnemyStrenght_TextBox.Text = battle.EnemyStrenght;
+					addBattle.MNEStrenght_TextBox.Text = battle.MNEStrength;
+					addBattle.EnemyStrenght_TextBox.Text = battle.EnemyStrength;
 					LoadDescription_RTF(battle.RtfPath, addBattle.Description_RichTextBox);
 					addBattle.SelectedImage.Source = new BitmapImage(new Uri(battle.ImagePath));
 					Result_ComboBox_Selection(battle, ref addBattle);
@@ -137,7 +212,7 @@ namespace HCI_PZ1_PR106_2021
 		private void SetMNEFlag(ref ViewBattleWindow viewBattleWindow, Battle battle)
 		{
 			int year = int.Parse(battle.Date.Year.ToString());
-			string dir = GetFlagsDir();
+			string dir = GetDir("Flags");
 
 			if (year <= 1496)
 				viewBattleWindow.MNEFlag.Source = new BitmapImage(new Uri(dir + "\\Montenegro_Crnojevic.png"));
@@ -153,19 +228,19 @@ namespace HCI_PZ1_PR106_2021
 		private void SetEnemyFlag(ref ViewBattleWindow viewBattleWindow, Battle battle)
 		{
 			string enemyName = viewBattleWindow.EnemySideName_TextBlock.Text;
-			string dir = GetFlagsDir();
+			string dir = GetDir("Flags");
 			int year = int.Parse(battle.Date.Year.ToString());
 			viewBattleWindow.EnemyFlag_Border.Visibility = Visibility.Visible;
 			if (enemyName == "France" ||  enemyName == "Francuska")
 			{
-				if (year >= 1804 && year <= 1815)
+				/*if (year >= 1804 && year <= 1815)
 					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France_Napoleon.png"));
-				else
+				else*/
 					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\France.png"));
 			}
 			else if (enemyName == "Ottoman Empire" || enemyName == "Osmansko carstvo")
 			{
-				if (year >= 1793)
+				if (year > 1796)
 					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire.png"));
 				else
 					viewBattleWindow.EnemyFlag.Source = new BitmapImage(new Uri(dir + "\\Ottoman_Empire(1517-1793).png"));
@@ -176,11 +251,11 @@ namespace HCI_PZ1_PR106_2021
 			}
 		}
 
-		private string GetFlagsDir()
+		private string GetDir(string subDir)
 		{
 			DirectoryInfo parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory());
 			DirectoryInfo parentDirectory2 = parentDirectory.Parent.Parent;
-			string dir = parentDirectory2.FullName + "\\Flags";
+			string dir = parentDirectory2.FullName + "\\" + subDir;
 			return dir;
 		}
 
@@ -225,7 +300,7 @@ namespace HCI_PZ1_PR106_2021
 			}
 			if (anyChecked)
 			{
-				MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to remove the selected item(s)?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+				MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to delete the selected item(s)?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
 				if (messageBoxResult == MessageBoxResult.Yes)
 				{
@@ -237,17 +312,11 @@ namespace HCI_PZ1_PR106_2021
 						}
 					}
 					BattlesDataGrid.Items.Refresh();
-					this.ShowToastNotification(new ToastNotification("Success", "Successfully removed item(s)", NotificationType.Success));
+					this.ShowToastNotification(new ToastNotification("Success", "Successfully delete item(s)", NotificationType.Success));
 				}
-				else
-				{
-					return;
-				}
+				else return;
 			}
-			else
-			{
-				return;
-			}
+			else return;
 		}
 		private void ShowToastNotification(ToastNotification toastNotification)
 		{
