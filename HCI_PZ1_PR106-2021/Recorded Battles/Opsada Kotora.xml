@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-16"?>
 <Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Id>0</Id>
-  <ImagePath>file:///C:/Users/drljo/Desktop/HCI_PZ1_PR106-2021/HCI_PZ1_PR106-2021/Images/Kotor.jpg</ImagePath>
+  <Id>3</Id>
+  <ImagePath>../../../Images/Kotor.jpg</ImagePath>
+  <ImagePathAbsolute>C:\Users\drljo\Desktop\nu\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Kotor.jpg</ImagePathAbsolute>
+  <ImageFileName>Kotor.jpg</ImageFileName>
   <RtfPath>../../../rtf Documents/Opsada Kotora.rtf</RtfPath>
   <NameOfBattle>Opsada Kotora</NameOfBattle>
   <Date>1813-10-14T00:00:00</Date>
-  <DateAdded>2024-03-27T15:53:26.8178766+01:00</DateAdded>
+  <DateAdded>2024-03-27T17:50:55.7461756+01:00</DateAdded>
   <EnemySide>France</EnemySide>
   <MNECommander>William Hoste</MNECommander>
   <EnemyCommander>Jean Gauthier</EnemyCommander>

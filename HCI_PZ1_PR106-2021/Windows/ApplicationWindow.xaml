@@ -34,8 +34,7 @@
                         <LineSegment Point="50, 600"/>
                         <LineSegment Point="950, 600"/>
                         <ArcSegment Point="950, 500"
-                                SweepDirection="Counterclockwise" Size="1, 1"
-                                />
+                                SweepDirection="Counterclockwise" Size="1, 1"/>
                         <LineSegment Point="1000, 550"/>
                         <LineSegment Point="1000, 0"/>
                     </PathFigure>
@@ -129,7 +128,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image MaxHeight="150"
-                                       Source="{Binding ImagePath}" />
+                                       Source="{Binding ImagePathAbsolute}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

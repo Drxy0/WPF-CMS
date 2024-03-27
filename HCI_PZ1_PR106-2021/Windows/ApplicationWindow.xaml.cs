@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace HCI_PZ1_PR106_2021
     public partial class ApplicationWindow : Window
     {
         public static ObservableCollection<Battle> Battles { get; set; }
+		public static List<string> ImagesToRemove { get; set; }
 		private NotificationManager notificationManager;
 		private static bool viewModeIsVisitor = false;
         public ApplicationWindow(bool isVisitor)
@@ -34,6 +36,7 @@ namespace HCI_PZ1_PR106_2021
 			notificationManager = new NotificationManager();
 			viewModeIsVisitor = isVisitor;
             Battles = new ObservableCollection<Battle>();
+			ImagesToRemove = new List<string>();
 			LoadBattlesFromRecords();
 			Closing += ApplicationWindow_Closing;
             AdjustPageForVisitor(isVisitor);
@@ -50,10 +53,33 @@ namespace HCI_PZ1_PR106_2021
 					if (System.IO.Path.GetExtension(file).Equals(".xml", StringComparison.OrdinalIgnoreCase))
 					{
 						Battle battle = LoadFromXml(file);
+						string pattern = @"(?<=\/)[^\/]+$"; // regex text after last /
+						Match match = Regex.Match(battle.ImagePath, pattern);
+						battle.ImageFileName = match.Value;
+						battle.ImagePathAbsolute = battle.GetImagePathAbsolute();
 						Battles.Add(battle);
 					}
 				}
 			}
+			string imagesDir = GetDir("Images");
+			if (Directory.Exists(imagesDir))
+			{
+				string[] files = Directory.GetFiles(imagesDir);
+				foreach (string file in files)
+				{
+					int occurences = 0;
+					foreach (Battle battle in Battles)
+					{
+						if (battle.ImagePathAbsolute == file)
+							occurences++;
+					}
+					if (occurences == 0)
+					{
+						File.Delete(file);
+					}
+				}
+			}
+
 		}
 
 		private Battle LoadFromXml(string filePath)
@@ -111,7 +137,7 @@ namespace HCI_PZ1_PR106_2021
 			string recordsDir = GetDir("Recorded Battles");
 			if (Directory.Exists(recordsDir))
 			{
-				// Delete all files in the directory
+				// Delete all files in the directory first
 				string[] files = Directory.GetFiles(recordsDir);
 				foreach (string file in files)
 				{
@@ -185,7 +211,7 @@ namespace HCI_PZ1_PR106_2021
 					viewBattleWindow.MNEStrenght_TextBlock.Text = battle.MNEStrength;
 					viewBattleWindow.EnemyStrenght_TextBlock.Text = battle.EnemyStrength;
 					LoadDescription_RTF(battle.RtfPath, viewBattleWindow.Description_RichTextBox);
-					viewBattleWindow.SelectedImage.Source = new BitmapImage(new Uri(battle.ImagePath));
+					viewBattleWindow.SelectedImage.Source = new BitmapImage(new Uri(battle.ImagePathAbsolute));
 					viewBattleWindow.Result_TextBlock.Text = battle.Result;
 					viewBattleWindow.Show();
 				}
@@ -200,9 +226,13 @@ namespace HCI_PZ1_PR106_2021
 					addBattle.MNEStrenght_TextBox.Text = battle.MNEStrength;
 					addBattle.EnemyStrenght_TextBox.Text = battle.EnemyStrength;
 					LoadDescription_RTF(battle.RtfPath, addBattle.Description_RichTextBox);
-					addBattle.SelectedImage.Source = new BitmapImage(new Uri(battle.ImagePath));
+					//Image loading
+					string basePath = AppDomain.CurrentDomain.BaseDirectory;
+					string relativeImagePath = battle.ImagePath;
+					string imagePath = System.IO.Path.Combine(basePath, relativeImagePath);
+					addBattle.SelectedImage.Source = new BitmapImage(new Uri(imagePath));
+					//
 					Result_ComboBox_Selection(battle, ref addBattle);
-
 					addBattle.Add_Button.Content = "Save Changes";
 					addBattle.Show();
 				}
@@ -295,6 +325,11 @@ namespace HCI_PZ1_PR106_2021
 					if (File.Exists(battle.RtfPath))
 					{
 						File.Delete(battle.RtfPath);
+					}
+
+					if (File.Exists(battle.ImagePathAbsolute))
+					{
+						ImagesToRemove.Add(battle.ImagePathAbsolute);
 					}
 				}
 			}

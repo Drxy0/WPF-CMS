@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-16"?>
 <Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Id>2</Id>
-  <ImagePath>file:///C:/Users/drljo/Desktop/HCI_PZ1_PR106-2021/HCI_PZ1_PR106-2021/Images/Bitka_na_Fundini.jpg</ImagePath>
+  <Id>0</Id>
+  <ImagePath>../../../Images/Bitka_na_Fundini.jpg</ImagePath>
+  <ImagePathAbsolute>C:\Users\drljo\Desktop\nu\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Bitka_na_Fundini.jpg</ImagePathAbsolute>
+  <ImageFileName>Bitka_na_Fundini.jpg</ImageFileName>
   <RtfPath>../../../rtf Documents/Bitka na Fundini.rtf</RtfPath>
   <NameOfBattle>Bitka na Fundini</NameOfBattle>
   <Date>1876-08-02T00:00:00</Date>
-  <DateAdded>2024-03-27T15:12:29.072144+01:00</DateAdded>
+  <DateAdded>2024-03-27T17:49:21.9163855+01:00</DateAdded>
   <EnemySide>Ottoman Empire</EnemySide>
   <MNECommander>Ilija Plamenac</MNECommander>
   <EnemyCommander>Mahmud-paša</EnemyCommander>

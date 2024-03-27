@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Notification.Wpf;
+using System.IO;
 
 
 namespace HCI_PZ1_PR106_2021
@@ -48,7 +49,6 @@ namespace HCI_PZ1_PR106_2021
 				mainWindow.ShowToastNotification(new ToastNotification("Sign in Error", "Invalid username or password!", NotificationType.Error));
 			}
 		}
-
 		private void Exit_Button_Click(object sender, RoutedEventArgs e)
 		{
 			Close();

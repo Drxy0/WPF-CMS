@@ -161,7 +161,7 @@
                Content=""
                FontSize="14"
                Foreground="Yellow"
-               Margin="20,52,0,0"/>
+               Margin="25,52,0,0"/>
         <Label Content="Strenght"
                Grid.Column="1"
                Grid.Row="3"

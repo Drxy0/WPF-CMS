@@ -21,17 +21,19 @@ namespace HCI_PZ1_PR106_2021.Classes
 		}
 
 		private uint id;
-		private string imagePath;
-		private string rtfPath;
-		private string nameOfBattle;
+		private string imagePath = string.Empty;
+		private string imagePathAbsolute = string.Empty;
+		private string imageFileName = string.Empty;
+		private string rtfPath = string.Empty;
+		private string nameOfBattle = string.Empty;
 		private DateTime date;
 		private DateTime dateAdded;
-		private string enemySide;
-		private string mneCommander;
-		private string enemyCommander;
-		private string mneStrength;
-		private string enemyStrength;
-		private string result;
+		private string enemySide = string.Empty;
+		private string mneCommander = string.Empty;
+		private string enemyCommander = string.Empty;
+		private string mneStrength = string.Empty;
+		private string enemyStrength = string.Empty;
+		private string result = string.Empty;
 		private bool isChecked;
 
 		public Battle() { }
@@ -63,6 +65,8 @@ namespace HCI_PZ1_PR106_2021.Classes
 
 		public uint Id { get => id; set => id = value; }
 		public string ImagePath { get { return imagePath; } set {  imagePath = value; } }
+		public string ImagePathAbsolute { get { return GetImagePathAbsolute(); } set { imagePathAbsolute = value; } }
+		public string ImageFileName { get { return imageFileName; } set { imageFileName = value; } }
 		public string RtfPath { get { return rtfPath; } set {  rtfPath = value; } }
 		public string NameOfBattle { get => nameOfBattle; set => nameOfBattle = value; }
 		public DateTime Date { get => date; set => date = value; }
@@ -101,6 +105,13 @@ namespace HCI_PZ1_PR106_2021.Classes
 			StringWriter writer = new StringWriter();
 			serializer.Serialize(writer, this);
 			return writer.ToString();
+		}
+
+		public string GetImagePathAbsolute()
+		{
+			string basePath = ApplicationWindow.GetDir("Images");
+			string imagePath = Path.Combine(basePath, ImageFileName);
+			return imagePath;
 		}
 
 

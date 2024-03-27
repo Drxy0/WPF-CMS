@@ -89,9 +89,17 @@ namespace HCI_PZ1_PR106_2021
 				string enemyCommander = EnemyCommanders_TextBox.Text;
 				string mneStrenght = MNEStrenght_TextBox.Text;
 				string enemyStrenght = EnemyStrenght_TextBox.Text;
-				string imagePath = SelectedImage.Source.ToString();
 				string rtfPath = SaveToRTF();
 				string result = Result_ComboBox.SelectedValue.ToString();
+
+				string imagesDir = ApplicationWindow.GetDir("Images");
+				string imagePath = SelectedImage.Source.ToString();
+				Uri uri = new Uri(imagePath);
+				string localPath = uri.LocalPath;
+				string fileName = System.IO.Path.GetFileName(localPath);
+				string destinationPath = System.IO.Path.Combine(imagesDir, fileName);
+				File.Copy(localPath, destinationPath, true);
+				imagePath = System.IO.Path.Combine("../../../Images/", fileName);
 
 				while (true)
 				{
@@ -101,6 +109,8 @@ namespace HCI_PZ1_PR106_2021
 				}
 
 				Battle battle = new Battle(id, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
+				battle.ImageFileName = fileName;
+				battle.ImagePathAbsolute = battle.GetImagePathAbsolute();
 				ApplicationWindow.Battles.Add(battle);
 				ChangesSaved = true;
 				this.Close();
@@ -245,7 +255,11 @@ namespace HCI_PZ1_PR106_2021
 			try
 			{
 				ImageError_Label.Content = "";
-				string imagePath = SelectedImage.Source.ToString();
+				string? imagePath = SelectedImage.Source.ToString();
+				if (imagePath == null)
+				{
+					errorOccured = true;
+				}
 			}
 			catch (Exception)
 			{
