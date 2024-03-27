@@ -2,7 +2,7 @@
 <Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>3</Id>
   <ImagePath>../../../Images/Kotor.jpg</ImagePath>
-  <ImagePathAbsolute>C:\Users\drljo\Desktop\nu\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Kotor.jpg</ImagePathAbsolute>
+  <ImagePathAbsolute>C:\Users\drljo\Desktop\WPF-CMS-master\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Kotor.jpg</ImagePathAbsolute>
   <ImageFileName>Kotor.jpg</ImageFileName>
   <RtfPath>../../../rtf Documents/Opsada Kotora.rtf</RtfPath>
   <NameOfBattle>Opsada Kotora</NameOfBattle>

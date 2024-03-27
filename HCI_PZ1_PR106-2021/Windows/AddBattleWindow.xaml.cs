@@ -98,7 +98,8 @@ namespace HCI_PZ1_PR106_2021
 				string localPath = uri.LocalPath;
 				string fileName = System.IO.Path.GetFileName(localPath);
 				string destinationPath = System.IO.Path.Combine(imagesDir, fileName);
-				File.Copy(localPath, destinationPath, true);
+				try { File.Copy(localPath, destinationPath, true); }
+				catch { }
 				imagePath = System.IO.Path.Combine("../../../Images/", fileName);
 
 				while (true)

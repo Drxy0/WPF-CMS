@@ -2,7 +2,7 @@
 <Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>1</Id>
   <ImagePath>../../../Images/Grahovobattle.jpg</ImagePath>
-  <ImagePathAbsolute>C:\Users\drljo\Desktop\nu\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Grahovobattle.jpg</ImagePathAbsolute>
+  <ImagePathAbsolute>C:\Users\drljo\Desktop\WPF-CMS-master\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Grahovobattle.jpg</ImagePathAbsolute>
   <ImageFileName>Grahovobattle.jpg</ImageFileName>
   <RtfPath>../../../rtf Documents/Bitka na Grahovcu.rtf</RtfPath>
   <NameOfBattle>Bitka na Grahovcu</NameOfBattle>
