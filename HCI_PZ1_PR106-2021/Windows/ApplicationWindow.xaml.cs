@@ -251,9 +251,9 @@ namespace HCI_PZ1_PR106_2021
 			}
 		}
 
-		private string GetDir(string subDir)
+		public static string GetDir(string subDir)
 		{
-			DirectoryInfo parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory());
+			DirectoryInfo? parentDirectory = Directory.GetParent(Directory.GetCurrentDirectory());
 			DirectoryInfo parentDirectory2 = parentDirectory.Parent.Parent;
 			string dir = parentDirectory2.FullName + "\\" + subDir;
 			return dir;

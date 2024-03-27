@@ -247,7 +247,7 @@ namespace HCI_PZ1_PR106_2021
 				ImageError_Label.Content = "";
 				string imagePath = SelectedImage.Source.ToString();
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				ToastError();
 				ImageError_Label.Content = "An image must be selected!";

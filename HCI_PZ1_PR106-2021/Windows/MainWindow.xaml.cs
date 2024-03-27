@@ -23,8 +23,9 @@ namespace HCI_PZ1_PR106_2021
 			InitializeComponent();
 			notificationManager = new NotificationManager();
 			mainWindow = (MainWindow)Application.Current.MainWindow;
+			string dir = ApplicationWindow.GetDir("Flags");
+			LogIn_Krstas.Source = new BitmapImage(new Uri(dir + "\\Vucji_Do_flag.png"));
 		}
-
 
 		private void LogIn_Button_Click(object sender, RoutedEventArgs e)
 		{

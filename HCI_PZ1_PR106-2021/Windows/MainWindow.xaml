@@ -80,9 +80,9 @@
                    Margin="0,0,150,0">
             </Label>
             
-            <Image Grid.Column="1"
+            <Image Name="LogIn_Krstas"
+                   Grid.Column="1"
                    Grid.RowSpan="2"
-                   Source="C:\Users\drljo\Desktop\HCI_PZ1_PR106-2021\HCI_PZ1_PR106-2021\Flags\Vucji_Do_flag.png"
                    Margin="0,2,0,65"/>
 
             <Label Content="Username"
