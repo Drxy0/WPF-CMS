@@ -75,7 +75,8 @@ namespace HCI_PZ1_PR106_2021
 					}
 					if (occurences == 0)
 					{
-						File.Delete(file);
+						try { File.Delete(file); }
+						catch { }
 					}
 				}
 			}

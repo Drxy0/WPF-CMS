@@ -129,7 +129,7 @@
                Grid.Row="2"
                Content=""
                FontSize="14"
-               Foreground="Yellow" Margin="15,52,-20,0"/>
+               Foreground="Yellow" Margin="5,52,-20,0"/>
         
         <Label Content="Commanders"
                Grid.Column="1"
@@ -161,7 +161,7 @@
                Content=""
                FontSize="14"
                Foreground="Yellow"
-               Margin="25,52,0,0"/>
+               Margin="20,52,-5,0"/>
         <Label Content="Strenght"
                Grid.Column="1"
                Grid.Row="3"
@@ -178,7 +178,7 @@
                Grid.Column="2"
                Content=""
                FontSize="14"
-               Foreground="Yellow" Margin="0,52,0,0"/>
+               Foreground="Yellow" Margin="-5,52,0,0"/>
 
         <Label Content="Description" Grid.Row="4"
                VerticalAlignment="Top"

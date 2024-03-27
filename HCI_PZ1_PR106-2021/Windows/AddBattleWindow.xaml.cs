@@ -253,16 +253,11 @@ namespace HCI_PZ1_PR106_2021
 				BattleDate.BorderBrush = defaultTextBoxBrush;
 			}
 
-			try
-			{
-				ImageError_Label.Content = "";
-				string? imagePath = SelectedImage.Source.ToString();
-				if (imagePath == null)
-				{
-					errorOccured = true;
-				}
-			}
-			catch (Exception)
+			ImageError_Label.Content = "";
+			string imagePath = string.Empty;
+			if (SelectedImage.Source != null)
+				imagePath = SelectedImage.Source.ToString();
+			else
 			{
 				ToastError();
 				ImageError_Label.Content = "An image must be selected!";
