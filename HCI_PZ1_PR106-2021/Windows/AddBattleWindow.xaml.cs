@@ -215,6 +215,12 @@ namespace HCI_PZ1_PR106_2021
 				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
+			else if (int.Parse(MNEStrenght_TextBox.Text.Replace(" ", "")) < 0)
+			{
+				MNEStrenghtError_Label.Content = "Integer cannot be negative!";
+				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
 			else
 			{
 				MNEStrenghtError_Label.Content = "";
@@ -231,6 +237,12 @@ namespace HCI_PZ1_PR106_2021
 			else if (!int.TryParse(EnemyStrenght_TextBox.Text.Replace(" ", ""), out _))
 			{
 				EnemyStrenghtError_Label.Content = "Field must be an integer!";
+				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
+				errorOccured = true;
+			}
+			else if (int.Parse(EnemyStrenght_TextBox.Text.Replace(" ", "")) < 0)
+			{
+				EnemyStrenghtError_Label.Content = "Integer cannot be negative!";
 				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}

@@ -2,7 +2,7 @@
 <Battle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Id>0</Id>
   <ImagePath>../../../Images/Bitka_na_Fundini.jpg</ImagePath>
-  <ImagePathAbsolute>C:\Users\drljo\Desktop\WPF-CMS-master\WPF-CMS-master\HCI_PZ1_PR106-2021\Images\Bitka_na_Fundini.jpg</ImagePathAbsolute>
+  <ImagePathAbsolute>C:\Users\drljo\Desktop\WPF-CMS\HCI_PZ1_PR106-2021\Images\Bitka_na_Fundini.jpg</ImagePathAbsolute>
   <ImageFileName>Bitka_na_Fundini.jpg</ImageFileName>
   <RtfPath>../../../rtf Documents/Bitka na Fundini.rtf</RtfPath>
   <NameOfBattle>Bitka na Fundini</NameOfBattle>
