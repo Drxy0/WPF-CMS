@@ -194,7 +194,7 @@ namespace HCI_PZ1_PR106_2021
 
 		private void NameTextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
-
+			//Hyperlink
 			var textBlock = sender as TextBlock;
 			if (textBlock != null)
 			{
@@ -216,7 +216,7 @@ namespace HCI_PZ1_PR106_2021
 					viewBattleWindow.Result_TextBlock.Text = battle.Result;
 					viewBattleWindow.Show();
 				}
-				else if (battle !=null  && viewModeIsVisitor == false)
+				else if (battle != null  && viewModeIsVisitor == false)
 				{
 					AddBattleWindow addBattle = new AddBattleWindow();
 					addBattle.Name_TextBox.Text = battle.NameOfBattle;

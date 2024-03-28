@@ -102,17 +102,42 @@ namespace HCI_PZ1_PR106_2021
 				catch { }
 				imagePath = System.IO.Path.Combine("../../../Images/", fileName);
 
-				while (true)
+				/*while (true)
 				{
 					bool idExists = ApplicationWindow.Battles.Any(b => b.Id == id);
 					if (idExists) { id++; }
 					else break;
-				}
+				}*/
 
-				Battle battle = new Battle(id, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
-				battle.ImageFileName = fileName;
-				battle.ImagePathAbsolute = battle.GetImagePathAbsolute();
-				ApplicationWindow.Battles.Add(battle);
+				bool duplicate = false;
+				for (int i = 0; i < ApplicationWindow.Battles.Count; i++)
+				{
+					Battle b = ApplicationWindow.Battles[i];
+					if (b.NameOfBattle == name)
+					{
+						// Replace the existing fields with the new ones
+						ApplicationWindow.Battles[i].Date = date;
+						ApplicationWindow.Battles[i].EnemySide = enemyName;
+						ApplicationWindow.Battles[i].MNECommander = mneCommander;
+						ApplicationWindow.Battles[i].EnemyCommander = enemyCommander;
+						ApplicationWindow.Battles[i].MNEStrength = mneStrenght;
+						ApplicationWindow.Battles[i].EnemyStrength = enemyStrenght;
+						ApplicationWindow.Battles[i].RtfPath = rtfPath;
+						ApplicationWindow.Battles[i].Result = result;
+						ApplicationWindow.Battles[i].ImagePath = imagePath;
+						ApplicationWindow.Battles[i].ImageFileName = fileName;
+						ApplicationWindow.Battles[i].ImagePathAbsolute = ApplicationWindow.Battles[i].GetImagePathAbsolute();
+						duplicate = true;
+						break;
+					}
+				}
+				if (!duplicate)
+				{
+					Battle battle = new Battle(id, imagePath, rtfPath, name, date, enemyName, mneCommander, enemyCommander, mneStrenght, enemyStrenght, result);
+					battle.ImageFileName = fileName;
+					battle.ImagePathAbsolute = battle.GetImagePathAbsolute();
+					ApplicationWindow.Battles.Add(battle);
+				}
 				ChangesSaved = true;
 				this.Close();
 			}
@@ -129,13 +154,13 @@ namespace HCI_PZ1_PR106_2021
 				Name_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
-			else if (Regex.IsMatch(Name_TextBox.Text, regexPattern))
+			/*else if (Regex.IsMatch(Name_TextBox.Text, regexPattern))
 			{
 				ToastError();
 				NameError_Label.Content = "Field cannot contain numbers!";
 				Name_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
-			}
+			}*/
 			else
 			{
 				NameError_Label.Content = "";
@@ -209,13 +234,13 @@ namespace HCI_PZ1_PR106_2021
 				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
-			else if (!int.TryParse(MNEStrenght_TextBox.Text.Replace(" ", ""), out _))
+			else if ((!int.TryParse(MNEStrenght_TextBox.Text.Replace(" ", ""), out _))) //!int.TryParse(MNEStrenght_TextBox.Text.Replace("\t", ""), out _)
 			{
 				MNEStrenghtError_Label.Content = "Field must be an integer!";
 				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
-			else if (int.Parse(MNEStrenght_TextBox.Text.Replace(" ", "")) < 0)
+			else if (int.Parse(Regex.Replace(MNEStrenght_TextBox.Text, @"\s", "")) < 0)
 			{
 				MNEStrenghtError_Label.Content = "Integer cannot be negative!";
 				MNEStrenght_TextBox.BorderBrush = Brushes.Yellow;
@@ -234,13 +259,13 @@ namespace HCI_PZ1_PR106_2021
 				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
-			else if (!int.TryParse(EnemyStrenght_TextBox.Text.Replace(" ", ""), out _))
+			else if (!int.TryParse(Regex.Replace(EnemyStrenght_TextBox.Text, @"\s", ""), out _))
 			{
 				EnemyStrenghtError_Label.Content = "Field must be an integer!";
 				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
 				errorOccured = true;
 			}
-			else if (int.Parse(EnemyStrenght_TextBox.Text.Replace(" ", "")) < 0)
+			else if (int.Parse(Regex.Replace(EnemyStrenght_TextBox.Text, @"\s", "")) < 0)
 			{
 				EnemyStrenghtError_Label.Content = "Integer cannot be negative!";
 				EnemyStrenght_TextBox.BorderBrush = Brushes.Yellow;
